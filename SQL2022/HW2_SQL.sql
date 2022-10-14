@@ -44,3 +44,4 @@ WHERE amount = (SELECT max(amount) FROM classicmodels.payments);
 SELECT customerNumber, amount FROM classicmodels.payments
 ORDER BY amount desc
 limit 1;
+-- ------------------------------------------------------------
