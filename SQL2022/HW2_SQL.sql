@@ -16,8 +16,8 @@ WHERE creditLimit >= 200000;
 SELECT * FROM classicmodels.employees
 WHERE jobTitle = 'President';
 
--- how many Sales Reps are in the company? (17)
-SELECT * FROM classicmodels.employees
+-- how many Sales Reps are in the company?
+SELECT count(*) FROM classicmodels.employees
 WHERE jobTitle = 'Sales Rep';
 
 -- show payments in descending order
@@ -25,7 +25,7 @@ SELECT * FROM classicmodels.payments
 ORDER BY amount desc;
 
 -- what was the check# for the payment done on December 17th 2004
-SELECT checkNumber FROM classicmodels.payments
+SELECT checkNumber, paymentDate FROM classicmodels.payments
 WHERE paymentDate = '2004-12-17';
 
 -- show product line with the word 'realistic' in the description
@@ -33,7 +33,7 @@ SELECT * FROM classicmodels.productlines
 WHERE textDescription like '%realistic %';
 
 -- show product name for vendor 'Unimax Art Galleries'
-SELECT productName FROM classicmodels.products
+SELECT productName, productVendor FROM classicmodels.products
 WHERE productVendor = 'Unimax Art Galleries';
 
 -- what is the customer number for the highest amount of payment
