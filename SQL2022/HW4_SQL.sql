@@ -118,3 +118,24 @@ INNER JOIN library_simple.reader AS lsr ON lsi.reader_id = lsr.id
 WHERE lsb.id = 252;
 
 -- 2.which books did Van Parks write?
+-- SELECT lsa.first_name, lsa.last_name, lsb.name
+SELECT 
+CONCAT(first_name, ' ', last_name) AS full_name, lsb.name AS book_name
+FROM library_simple.author AS lsa
+INNER JOIN library_simple.author_has_book AS lsahb ON lsa.id = lsahb.author_id
+INNER JOIN library_simple.book AS lsb ON lsahb.book_id = lsb.id
+WHERE lsa.first_name = 'Van' AND lsa.last_name = 'Parks';
+-- WHERE lsa.first_name = 'Van' AND lsa.last_name = 'Parks'
+
+-- 3.which books where published in 2003?
+-- 1 variant
+SELECT `name`, pub_year
+FROM library_simple.book
+WHERE pub_year = 2003;
+-- 2 variant
+SELECT lsa.id, lsa.first_name, lsa.last_name, lsahb.author_id, lsahb.book_id, lsb.id, lsb.ISBN, lsb.name, lsb.page_num, lsb.pub_year
+FROM library_simple.author lsa
+JOIN library_simple.author_has_book lsahb ON lsa.id = lsahb.author_id
+JOIN library_simple.book lsb ON lsahb.book_id = lsb.id
+WHERE lsb.pub_year = '2003';
+-- -----------------------------------------------------------------------------------------
