@@ -58,7 +58,7 @@ LIMIT 1;
 
 -- 10.list all products that have quantity in stock less than 20
 SELECT productName, quantityInStock FROM classicmodels.products
-WHERE quantityInStock <= 20;
+WHERE quantityInStock < 20;
 
 -- 11.which customer has the highest and lowest credit limit?
 -- SELECT * FROM classicmodels.customers;
