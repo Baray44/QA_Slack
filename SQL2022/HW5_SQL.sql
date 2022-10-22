@@ -55,7 +55,7 @@ WHERE buyPrice BETWEEN 100 AND 200;
 SELECT customerName, salesRepEmployeeNumber
 FROM classicmodels.customers
 WHERE salesRepEmployeeNumber IN
-(SELECT employeeNumber
+(SELECT DISTINCT employeeNumber
 FROM classicmodels.employees
 WHERE officeCode IN
 (SELECT officeCode FROM classicmodels.offices
@@ -120,4 +120,37 @@ ORDER BY count_product DESC
 LIMIT 1;
 
 -- 5.how much money was made between buyPrice and MSRP?
+
+SELECT SUM(prod.msrp * det.quantityOrdered) AS msrp_sales, 
+SUM(prod.buyPrice * det.quantityOrdered) AS buyPrice_sales,
+SUM(prod.msrp * det.quantityOrdered) - SUM(prod.buyPrice * det.quantityOrdered) AS difference_in_sales
+FROM classicmodels.products prod
+INNER JOIN classicmodels.orderdetails det ON prod.productCode = det.productCode;
+
 -- 7.which vendor sells more products?
+
+SELECT prod.productVendor, COUNT(prod.productCode) AS quantity, SUM(det.quantityOrdered) AS quantity_ordered
+FROM classicmodels.orderdetails det
+INNER JOIN classicmodels.products prod ON det.productCode = prod.productCode
+GROUP BY prod.productVendor
+ORDER BY det.quantityOrdered DESC
+LIMIT 1;
+
+-- 					Part #3 library_simple database
+
+-- Find all release dates for book 'Dog With Money'
+
+SELECT * FROM library_simple.book lsb 
+LEFT JOIN library_simple.copy lsc ON lsb.id = lsc.book_id
+LEFT JOIN library_simple.issuance lsi ON lsc.id = lsi.copy_id
+WHERE lsb.name = 'Dog With Money';
+ 
+-- to verify 
+SELECT * FROM library_simple.book
+WHERE name = 'Dog With Money';
+
+SELECT * FROM library_simple.copy
+WHERE book_id = 61;
+
+SELECT * FROM library_simple.issuance
+WHERE copy_id IN (573 , 768, 960);
