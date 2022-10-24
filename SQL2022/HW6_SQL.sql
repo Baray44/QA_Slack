@@ -120,10 +120,44 @@ ORDER BY MSRP
 LIMIT 1;
 
 -- 9.which product has the most quantityInStock?
+SELECT productCode, productName, quantityInStock
+FROM classicmodels.products
+ORDER BY quantityInStock DESC
+LIMIT 1;
+
 -- 10.list all products that have quantity in stock less than 20
+SELECT productName, quantityInStock
+FROM classicmodels.products
+WHERE quantityInStock < 20;
+-- ORDER BY quantityInStock DESC;
+
 -- 11.which customer has the highest and lowest credit limit?
+-- Highest credit limit
+SELECT customerNumber, customerName, creditLimit AS maxCreditLimit
+FROM classicmodels.customers
+WHERE creditLimit IN (SELECT MAX(creditLimit) FROM classicmodels.customers);
+
+SELECT customerNumber, customerName, creditLimit AS maxCreditLimit
+FROM classicmodels.customers
+ORDER BY creditLimit DESC
+LIMIT 1;
+
+-- Lowest credit limit
+SELECT customerNumber, customerName, creditLimit AS minCreditLimit
+FROM classicmodels.customers
+WHERE creditLimit IN (SELECT MIN(creditLimit) FROM classicmodels.customers);
+
+SELECT customerNumber, customerName, creditLimit AS minCreditLimit
+FROM classicmodels.customers
+WHERE creditLimit <= 0;
+
 -- 12.rank customers by credit limit
+SELECT customerNumber, customerName, creditLimit,
+RANK() OVER (ORDER BY creditLimit DESC) as `rank`
+FROM classicmodels.customers;
+
 -- 13.list the most sold product by city
+
 -- 14.customers in what city are the most profitable to the company?
 -- 15.what is the average number of orders per customer?
 -- 16.who is the best customer?
