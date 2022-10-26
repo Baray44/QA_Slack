@@ -157,15 +157,112 @@ RANK() OVER (ORDER BY creditLimit DESC) as `rank`
 FROM classicmodels.customers;
 
 -- 13.list the most sold product by city
+/* SELECT c.city, p.productCode, p.productName, det.quantityOrdered
+FROM classicmodels.customers c
+JOIN classicmodels.orders o ON c.customerNumber = o.customerNumber
+JOIN classicmodels.orderdetails det ON o.orderNumber = det.orderNumber
+JOIN classicmodels.products p ON det.productCode = p.productCode
+WHERE det.quantityOrdered IN (SELECT MAX(det.quantityOrdered) FROM classicmodels.orderdetails)
+GROUP BY c.city;*/
+
+WITH a AS (
+SELECT c.city, det.productCode, p.productName, SUM(quantityOrdered) AS quantitySold,
+(ROW_NUMBER() OVER (PARTITION BY c.city ORDER BY SUM(quantityOrdered) DESC)) AS rowNum
+FROM classicmodels.orderdetails det
+JOIN classicmodels.orders o ON o.orderNumber = det.orderNumber
+JOIN classicmodels.customers c on c.customerNumber = o.customerNumber
+JOIN classicmodels.products p ON det.productCode = p.productCode
+GROUP BY c.city, det.productCode
+) 
+SELECT a.city, a.productCode, a.productName, a.quantitySold
+FROM a
+WHERE rowNum = 1;
 
 -- 14.customers in what city are the most profitable to the company?
+-- 		#1
+SELECT c.city, p.amount as payedAmount
+FROM classicmodels.customers c
+JOIN classicmodels.payments p ON c.customerNumber = p.customerNumber 
+ORDER BY p.amount DESC
+LIMIT 1;
+-- 		#2
+SELECT  c.city, SUM(quantityordered*priceeach) AS revenue 
+FROM classicmodels.customers c 
+JOIN classicmodels.orders o ON c.customernumber=o.customernumber
+JOIN classicmodels.orderdetails od ON o.ordernumber=od.ordernumber
+GROUP BY c.city 
+ORDER BY revenue DESC 
+LIMIT 1;
+
 -- 15.what is the average number of orders per customer?
+-- 		#1
+SELECT c.customerName, AVG(quantityOrdered)
+FROM classicmodels.customers c
+JOIN classicmodels.orders o ON c.customerNumber = o.customerNumber
+JOIN classicmodels.orderdetails det ON o.orderNumber = det.orderNumber
+GROUP BY c.customerName
+ORDER BY AVG(quantityOrdered) DESC;
+-- 		#2
+SELECT (COUNT(orderNumber)/COUNT(DISTINCT customerNumber)) AS avgPerCust
+FROM classicmodels.orders;
+
 -- 16.who is the best customer?
+-- #1
+SELECT c.customerNumber, c.customerName AS bestCustomer, SUM(quantityOrdered * priceEach) AS amountOfPurchases
+FROM classicmodels.customers c
+JOIN classicmodels.orders o ON c.customerNumber = o.customerNumber
+JOIN classicmodels.orderdetails det ON o.orderNumber = det.orderNumber
+GROUP BY c.customerNumber
+ORDER BY amountOfPurchases DESC;
+-- #2
+SELECT c.customerName as BestCustomer, p.amount as amountPayed
+FROM classicmodels.payments p
+JOIN classicmodels.customers c ON p.customerNumber = c.customerNumber
+ORDER BY amount DESC
+LIMIT 1;
+
 -- 17.customers without payment
+SELECT c.customerNumber, c.customerName, p.amount
+FROM classicmodels.customers c
+LEFT JOIN classicmodels.payments p ON c.customerNumber = p.customerNumber
+WHERE amount is NULL;
+
 -- 18.what is the average number of days between the order date and ship date?
+-- #1
+SELECT SUM(DATEDIFF(shippedDate,orderDate))/COUNT(*) AS averageDays -- 3.5951
+FROM classicmodels.orders;
+-- #2
+SELECT AVG(DATEDIFF(shippedDate,orderDate)) AS averageDays -- 3.7564
+FROM classicmodels.orders;
+
 -- 19.sales by year
+SELECT
+YEAR(paymentDate) AS years, SUM(amount) AS sales 
+FROM classicmodels.payments
+GROUP BY years
+ORDER BY years;
+
+-- SELECT YEAR(orderDate) AS `Year`, COUNT(orderNumber)
+-- FROM classicmodels.orders
+-- GROUP BY orderDate
+-- ORDER BY `Year`;
+
 -- 20.how many orders are not shipped?
+SELECT COUNT(*) AS count_notShipped -- SELECT *
+FROM classicmodels.orders
+WHERE shippedDate IS NULL;
+
+SELECT orderNumber, shippedDate, `status` -- wrong because there customers that are in 'Disputed' status
+FROM classicmodels.orders
+WHERE `status` NOT LIKE 'Shipped';
+
 -- 21.list all employees by their (full name: first + last) in alpabetical order
--- 22.list of employees  by how much they sold in 2003?
+SELECT CONCAT(lastName, ' ', firstName) AS fullName
+FROM classicmodels.employees
+ORDER BY fullName;
+
+-- 22.list of employees by how much they sold in 2003?
+
+
 -- 23.which city has the most number of employees?
 -- 24.which office has the biggest sales?
