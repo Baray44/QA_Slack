@@ -293,3 +293,97 @@ JOIN classicmodels.offices o ON e.officeCode = o.officeCode
 GROUP BY o.officeCode
 ORDER BY salesAmount DESC
 LIMIT 1;
+
+-- Advanched homework: join all tables together
+SELECT * -- 12,015
+FROM classicmodels.orders o
+JOIN classicmodels.customers c ON o.customerNumber = c.customerNumber
+JOIN classicmodels.payments pay ON c.customerNumber = pay.customerNumber
+JOIN classicmodels.employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+JOIN classicmodels.offices ofs ON e.officeCode = ofs.officeCode
+JOIN classicmodels.orderdetails det ON o.orderNumber = det.orderNumber
+JOIN classicmodels.products prod ON det.productCode = prod.productCode
+JOIN classicmodels.productlines pl ON prod.productLine = pl.productLine;
+
+SELECT * -- COUNT(1)-- 2,996
+FROM classicmodels.customers c
+JOIN classicmodels.employees e ON e.employeeNumber = c.salesRepEmployeeNumber
+JOIN classicmodels.offices o ON e.officeCode = o.officeCode
+JOIN (SELECT customerNumber, MAX(paymentDate) AS paymentDate, SUM(amount) AS amount 
+FROM classicmodels.payments GROUP BY customerNumber) p ON c.customerNumber = p.customerNumber
+JOIN classicmodels.orders orders ON c.customerNumber = orders.customerNumber
+JOIN classicmodels.orderdetails det ON orders.orderNumber = det.orderNumber
+JOIN classicmodels.products pr ON det.productCode = pr.productCode
+JOIN classicmodels.productlines pl ON pr.productLine = pl.productLine;
+-- -----------------------------------------------------------------------------------------------------
+/* 					Homework - Part #2 
+Find any dataset you want to analyze (csv, xls, etc.) and import the data 
+https://www.dataquest.io/blog/free-datasets-for-projects/
+https://www.kaggle.com/datasets
+https://catalog.data.gov/dataset
+https://data.world
+https://datasf.org/opendata/
+
+Import this dataset to mysql database: 
+1. create a database
+2. right click on that database - Table Data Import Wizard - next - next - next ...
+*/
+
+/*Film Locations in San Francisco
+-- https://data.sfgov.org/Culture-and-Recreation/Film-Locations-in-San-Francisco/yitu-d5am
+-- import csv file Film_Locations_in_San_Francisco.csv
+-- in MySQL Workbanch: create database Film
+-- right click on Film database - Import Table - Wizard - Next ...
+-- select * from film.film_locations_in_san_francisco;
+Queries:
+count distinct movies
+count of all films by release year
+count of all films by 'production company'
+count of all films directed by Woody Allen
+how many movies have/don't have fun facts?
+in how many movies were Keanu Reeves and Robin Williams?
+*/
+CREATE DATABASE Film;
+select * from film.film_locations_in_san_francisco;
+
+-- count distinct movies
+SELECT DISTINCT Title FROM film.film_locations_in_san_francisco;
+
+-- count of all films by release year
+SELECT `Release Year`, COUNT(DISTINCT Title) AS Films_count
+FROM film.film_locations_in_san_francisco
+GROUP BY `Release Year`
+ORDER BY `Release Year`;
+
+-- count of all films by 'production company'
+SELECT `Production Company`, COUNT(DISTINCT Title) AS Films_count
+FROM film.film_locations_in_san_francisco
+GROUP BY `Production Company`
+ORDER BY Films_count DESC;
+
+-- count of all films directed by Woody Allen
+SELECT Director, COUNT(DISTINCT Title) AS Films_count
+FROM film.film_locations_in_san_francisco
+WHERE Director LIKE '%Woody Allen%'
+GROUP BY Director;
+
+-- how many movies have/don't have fun facts?
+SELECT CASE WHEN `Fun facts` = '' THEN 'No' ELSE 'Yes' END AS Fun_fact, 
+COUNT(DISTINCT Title) AS Films_cnt
+FROM film.film_locations_in_san_francisco
+GROUP BY CASE WHEN `Fun facts` = '' THEN 'No' ELSE 'Yes' END;
+
+-- in how many movies were Keanu Reeves and Robin Williams?
+SELECT COUNT(DISTINCT Title) Films
+FROM film.film_locations_in_san_francisco
+WHERE `Actor 1` IN ('Keanu Reeves', 'Robin Williams')
+OR `Actor 2` IN ('Keanu Reeves', 'Robin Williams')
+OR `Actor 3` IN ('Keanu Reeves', 'Robin Williams');
+
+-- SELECT `Actor 3`, COUNT(DISTINCT Title) AS Films
+-- FROM film.film_locations_in_san_francisco
+-- WHERE `Actor 3` LIKE '%Keanu Reeves%'
+-- UNION
+-- SELECT `Actor 3`, COUNT(DISTINCT Title)
+-- FROM film.film_locations_in_san_francisco
+-- WHERE `Actor 3` LIKE '%Robin Williams%';
