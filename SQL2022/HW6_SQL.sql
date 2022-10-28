@@ -242,11 +242,6 @@ FROM classicmodels.payments
 GROUP BY years
 ORDER BY years;
 
--- SELECT YEAR(orderDate) AS `Year`, COUNT(orderNumber)
--- FROM classicmodels.orders
--- GROUP BY orderDate
--- ORDER BY `Year`;
-
 -- 20.how many orders are not shipped?
 SELECT COUNT(*) AS count_notShipped -- SELECT *
 FROM classicmodels.orders
@@ -262,7 +257,39 @@ FROM classicmodels.employees
 ORDER BY fullName;
 
 -- 22.list of employees by how much they sold in 2003?
+SELECT e.employeeNumber, COUNT(p.paymentDate)
+FROM classicmodels.payments p
+JOIN classicmodels.customers c ON p.customerNumber = c.customerNumber
+JOIN classicmodels.employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+WHERE YEAR(p.paymentDate) = 2003
+GROUP BY e.employeeNumber;
 
+SELECT CONCAT(e.lastName, ' ',e.firstName) as fullName, YEAR(p.paymentDate) as Year_sold, YEAR(o.orderdate) as Year_ordered, sum(p.amount) as sold
+FROM classicmodels.employees e
+JOIN classicmodels.customers c ON e.employeeNumber = c.salesRepEmployeeNumber
+JOIN classicmodels.payments p ON c.customerNumber = p.customerNumber
+-- for payments
+-- where YEAR(p.paymentDate) = 2003
+-- for orders: 
+JOIN classicmodels.orders o on o.customernumber=c.customernumber
+WHERE o.orderDate BETWEEN '2003-01-01' AND '2003-12-31'
+GROUP BY fullName
+ORDER BY fullName, p.amount;
 
 -- 23.which city has the most number of employees?
+SELECT o.city, COUNT(e.employeeNumber) AS count_employee
+FROM classicmodels.employees e
+JOIN classicmodels.offices o ON e.officeCode = o.officeCode
+GROUP BY o.city
+ORDER BY count_employee DESC
+LIMIT 1;
+
 -- 24.which office has the biggest sales?
+SELECT o.officeCode, o.city, SUM(p.amount) AS salesAmount
+FROM classicmodels.payments p
+JOIN classicmodels.customers c ON p.customerNumber = c.customerNumber
+JOIN classicmodels.employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+JOIN classicmodels.offices o ON e.officeCode = o.officeCode
+GROUP BY o.officeCode
+ORDER BY salesAmount DESC
+LIMIT 1;
