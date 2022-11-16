@@ -13,9 +13,9 @@ Severity|	Critical
 Priority|	High
 Environment	| Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
-STR	| 1. Ввести 2 латинских буквы в поле "Name" (например: Se) 2. Нажать "Submit"
-AR	|Error
-ER	|Success
+STR	| 1. Ввести 2 латинских буквы в поле "Name" (например: Ni) 2. Нажать "Submit"
+Actual Result	|Error
+Expected Result	|Success
 Attachments |
 	
 	
@@ -27,8 +27,8 @@ Priority|	High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR|	1. Ввести 3 латинских буквы в поле Name 2. Нажать "Submit"
-AR|	Error
-ER|	Success
+Actual Result|	Error
+Expected Result|	Success
 Attachments	|
 	
 	
@@ -40,8 +40,8 @@ Priority|	High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR	|1. Ввести 127 латинских буквы в поле Name 2. Нажать "Submit"
-AR|	Error
-ER|	Success
+Actual Result|	Error
+Expected Result|	Success
 Attachments	|
 
 Bug id|	id_4
@@ -52,8 +52,8 @@ Priority|	High
 Environment	|Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR|	1. Ввести 128 латинских буквы в поле "Name" 2. Нажать "Submit"
-AR	|Error
-ER	|Success
+Actual Result	|Error
+Expected Result	|Success
 Attachments	|
 	
 	
@@ -65,8 +65,8 @@ Priority|	High
 Environment	|Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR	|1. Ввести символ & в поле "Name" 2. Нажать "Submit"
-AR|	Success
-ER|	Error
+Actual Result|	Success
+Expected Result|	Error
 Attachments	|
 	
 	
@@ -78,8 +78,8 @@ Priority	|High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме Name заполнены валидными данными
 STR|	1. Ввести кириллицу в поле "Name" 2. Нажать "Submit"
-AR|	Success
-ER|	Error
+Actual Result|	Success
+Expected Result|	Error
 Attachments|	
 	
 	
@@ -91,8 +91,8 @@ Priority|	High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR|	1. Ввести имя со символа _ в поле Name 2. Нажать "Submit"
-AR	|Success
-ER|	Error
+Actual Result	|Success
+Expected Result|	Error
 Attachments	|
 	
 	
@@ -104,8 +104,8 @@ Priority|	High
 Environment	|Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR|	1. Ввести символ _ в конце имени в поле Name 2. Нажать "Submit"
-AR|	Success
-ER|	Error
+Actual Result|	Success
+Expected Result|	Error
 Attachments	|
 	
 	
@@ -117,6 +117,6 @@ Priority|	High
 Environment	|Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме Name заполнены валидными данными
 STR	|1. Ввести символ __ в середине имени в поле "Name" 2. Нажать "Submit"
-AR|	Success
-ER	|Error
+Actual Result|	Success
+Expected Result	|Error
 Attachments	|
