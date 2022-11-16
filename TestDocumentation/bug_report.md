@@ -26,7 +26,7 @@ Severity|	Critical
 Priority|	High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
-STR|	1. Ввести 3 латинских буквы в поле Name 2. Нажать "Submit"
+STR|	1. Ввести 3 латинских буквы в поле "Name" 2. Нажать "Submit"
 Actual Result|	Error
 Expected Result|	Success
 Attachments	|
@@ -39,7 +39,7 @@ Severity|	Critical
 Priority|	High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
-STR	|1. Ввести 127 латинских буквы в поле Name 2. Нажать "Submit"
+STR	|1. Ввести 127 латинских буквы в поле "Name" 2. Нажать "Submit"
 Actual Result|	Error
 Expected Result|	Success
 Attachments	|
@@ -76,7 +76,7 @@ Title|	Пользователь может зарегистрироваться 
 Severity|	Critical
 Priority	|High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
-Precondition|	Все поля, кроме Name заполнены валидными данными
+Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR|	1. Ввести кириллицу в поле "Name" 2. Нажать "Submit"
 Actual Result|	Success
 Expected Result|	Error
@@ -90,7 +90,7 @@ Severity|	Critical
 Priority|	High
 Environment|	Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
-STR|	1. Ввести имя со символа _ в поле Name 2. Нажать "Submit"
+STR|	1. Ввести имя со символа _ в поле "Name" 2. Нажать "Submit"
 Actual Result	|Success
 Expected Result|	Error
 Attachments	|
@@ -103,7 +103,7 @@ Severity|	Critical
 Priority|	High
 Environment	|Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
 Precondition|	Все поля, кроме "Name" заполнены валидными данными
-STR|	1. Ввести символ _ в конце имени в поле Name 2. Нажать "Submit"
+STR|	1. Ввести символ _ в конце имени в поле "Name" 2. Нажать "Submit"
 Actual Result|	Success
 Expected Result|	Error
 Attachments	|
@@ -115,7 +115,7 @@ Title|	Пользователь не может зарегистрировать
 Severity|	Critical
 Priority|	High
 Environment	|Windows 10 Домашняя, x64; Google Chrome Версия 102.0.5005.63
-Precondition|	Все поля, кроме Name заполнены валидными данными
+Precondition|	Все поля, кроме "Name" заполнены валидными данными
 STR	|1. Ввести символ __ в середине имени в поле "Name" 2. Нажать "Submit"
 Actual Result|	Success
 Expected Result	|Error
