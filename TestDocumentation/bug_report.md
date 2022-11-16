@@ -2,7 +2,7 @@
 
 Bug report в [Google Таблице](https://docs.google.com/spreadsheets/d/1P9NU0PIWAzhoHew6rp0UjliQeoO1vB7uqCFw2a2fZR8/edit#gid=1947573212)
 
-Чек-лист можно посмотреть [тут](https://github.com/sbrownbear/qa_practice/blob/main/checklist_form_testing.md)
+[Checklist](https://github.com/Baray44/QA_Slack/blob/master/TestDocumentation/checklist.md)
 
 [Тестируемый сайт](http://itcareer.pythonanywhere.com/)
 

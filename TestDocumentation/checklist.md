@@ -1,4 +1,4 @@
-# Check-List
+# Checklist
 Чек-лист в [Google Таблице](https://docs.google.com/spreadsheets/d/1P9NU0PIWAzhoHew6rp0UjliQeoO1vB7uqCFw2a2fZR8/edit#gid=1060838499)
 
 [Bug report](https://github.com/Baray44/QA_Slack/blob/master/TestDocumentation/bug_report.md)
